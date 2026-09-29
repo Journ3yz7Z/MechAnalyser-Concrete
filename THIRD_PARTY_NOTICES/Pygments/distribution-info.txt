@@ -1,0 +1,5 @@
+Name: Pygments
+Version: 2.21.0
+Home-page: 
+License: 
+License-Expression: BSD-2-Clause

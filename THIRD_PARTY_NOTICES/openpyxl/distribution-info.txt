@@ -1,0 +1,5 @@
+Name: openpyxl
+Version: 3.1.5
+Home-page: https://openpyxl.readthedocs.io
+License: MIT
+License-Expression: 

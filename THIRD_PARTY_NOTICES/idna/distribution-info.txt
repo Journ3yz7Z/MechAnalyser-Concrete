@@ -1,0 +1,5 @@
+Name: idna
+Version: 3.10
+Home-page: 
+License: 
+License-Expression: 

@@ -1,0 +1,5 @@
+Name: pefile
+Version: 2023.2.7
+Home-page: https://github.com/erocarrera/pefile
+License: MIT
+License-Expression: 

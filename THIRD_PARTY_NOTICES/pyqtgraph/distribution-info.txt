@@ -1,0 +1,5 @@
+Name: pyqtgraph
+Version: 0.13.7
+Home-page: http://www.pyqtgraph.org
+License: MIT
+License-Expression: 

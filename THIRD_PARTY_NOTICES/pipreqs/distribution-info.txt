@@ -1,0 +1,5 @@
+Name: pipreqs
+Version: 0.4.13
+Home-page: https://github.com/bndr/pipreqs
+License: Apache License
+License-Expression: 

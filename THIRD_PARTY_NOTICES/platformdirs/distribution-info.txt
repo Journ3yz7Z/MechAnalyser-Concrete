@@ -1,0 +1,5 @@
+Name: platformdirs
+Version: 4.3.8
+Home-page: 
+License: 
+License-Expression: MIT

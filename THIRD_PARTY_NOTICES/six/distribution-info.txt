@@ -1,0 +1,5 @@
+Name: six
+Version: 1.17.0
+Home-page: https://github.com/benjaminp/six
+License: MIT
+License-Expression: 

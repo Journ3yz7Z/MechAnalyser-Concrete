@@ -1,0 +1,5 @@
+Name: pyinstaller-hooks-contrib
+Version: 2025.2
+Home-page: https://github.com/pyinstaller/pyinstaller-hooks-contrib
+License: 
+License-Expression: 

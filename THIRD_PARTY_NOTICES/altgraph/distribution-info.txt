@@ -1,0 +1,5 @@
+Name: altgraph
+Version: 0.17.4
+Home-page: https://altgraph.readthedocs.io
+License: MIT
+License-Expression: 

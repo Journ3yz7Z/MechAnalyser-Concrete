@@ -1,0 +1,5 @@
+Name: pytest-qt
+Version: 4.5.0
+Home-page: http://github.com/pytest-dev/pytest-qt
+License: MIT
+License-Expression: 

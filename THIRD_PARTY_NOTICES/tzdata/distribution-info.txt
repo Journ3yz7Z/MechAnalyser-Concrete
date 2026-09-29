@@ -1,0 +1,5 @@
+Name: tzdata
+Version: 2025.1
+Home-page: https://github.com/python/tzdata
+License: Apache-2.0
+License-Expression: 

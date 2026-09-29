@@ -1,0 +1,5 @@
+Name: charset-normalizer
+Version: 3.4.1
+Home-page: 
+License: MIT
+License-Expression: 

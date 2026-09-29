@@ -1,0 +1,5 @@
+Name: pip
+Version: 25.0.1
+Home-page: 
+License: MIT
+License-Expression: 

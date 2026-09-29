@@ -1,0 +1,5 @@
+Name: pluggy
+Version: 1.6.0
+Home-page: 
+License: MIT
+License-Expression: 

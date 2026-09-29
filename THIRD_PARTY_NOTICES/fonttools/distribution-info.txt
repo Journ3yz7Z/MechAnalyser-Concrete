@@ -1,0 +1,5 @@
+Name: fonttools
+Version: 4.56.0
+Home-page: http://github.com/fonttools/fonttools
+License: MIT
+License-Expression: 

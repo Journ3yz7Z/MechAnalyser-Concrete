@@ -1,0 +1,5 @@
+Name: pyinstaller
+Version: 6.12.0
+Home-page: https://www.pyinstaller.org/
+License: GPLv2-or-later with a special exception which allows to use PyInstaller to build and distribute non-free programs (including commercial ones)
+License-Expression: 

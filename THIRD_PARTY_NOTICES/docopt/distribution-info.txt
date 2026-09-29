@@ -1,0 +1,5 @@
+Name: docopt
+Version: 0.6.2
+Home-page: http://docopt.org
+License: MIT
+License-Expression: 

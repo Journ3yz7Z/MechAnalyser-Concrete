@@ -1,0 +1,5 @@
+Name: requests
+Version: 2.32.3
+Home-page: https://requests.readthedocs.io
+License: Apache-2.0
+License-Expression: 

@@ -1,0 +1,5 @@
+Name: et_xmlfile
+Version: 2.0.0
+Home-page: https://foss.heptapod.net/openpyxl/et_xmlfile
+License: MIT
+License-Expression: 

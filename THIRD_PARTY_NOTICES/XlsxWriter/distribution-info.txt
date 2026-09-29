@@ -1,0 +1,5 @@
+Name: XlsxWriter
+Version: 3.2.2
+Home-page: https://github.com/jmcnamara/XlsxWriter
+License: BSD-2-Clause
+License-Expression: 

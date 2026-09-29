@@ -1,0 +1,5 @@
+Name: shiboken6
+Version: 6.8.2.1
+Home-page: 
+License: LGPL
+License-Expression: 

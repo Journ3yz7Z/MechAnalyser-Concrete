@@ -1,0 +1,5 @@
+Name: pandas-stubs
+Version: 2.2.3.250308
+Home-page: https://pandas.pydata.org
+License: BSD-3-Clause
+License-Expression: 

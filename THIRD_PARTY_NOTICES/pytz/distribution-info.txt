@@ -1,0 +1,5 @@
+Name: pytz
+Version: 2025.1
+Home-page: http://pythonhosted.org/pytz
+License: MIT
+License-Expression: 

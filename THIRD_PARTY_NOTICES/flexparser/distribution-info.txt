@@ -1,0 +1,5 @@
+Name: flexparser
+Version: 0.4
+Home-page: 
+License: BSD-3-Clause
+License-Expression: 

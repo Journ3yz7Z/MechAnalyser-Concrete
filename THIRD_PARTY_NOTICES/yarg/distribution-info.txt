@@ -1,0 +1,5 @@
+Name: yarg
+Version: 0.1.10
+Home-page: https://yarg.readthedocs.org/
+License: MIT
+License-Expression: 

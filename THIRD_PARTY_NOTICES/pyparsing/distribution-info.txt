@@ -1,0 +1,5 @@
+Name: pyparsing
+Version: 3.2.3
+Home-page: 
+License: 
+License-Expression: 

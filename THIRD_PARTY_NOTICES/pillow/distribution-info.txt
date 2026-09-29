@@ -1,0 +1,5 @@
+Name: pillow
+Version: 11.1.0
+Home-page: 
+License: MIT-CMU
+License-Expression: 

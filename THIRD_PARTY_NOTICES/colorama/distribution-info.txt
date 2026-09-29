@@ -1,0 +1,5 @@
+Name: colorama
+Version: 0.4.6
+Home-page: 
+License: 
+License-Expression: 

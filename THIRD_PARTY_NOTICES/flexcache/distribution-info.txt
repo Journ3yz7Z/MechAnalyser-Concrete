@@ -1,0 +1,5 @@
+Name: flexcache
+Version: 0.3
+Home-page: 
+License: BSD
+License-Expression: 

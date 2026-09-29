@@ -1,0 +1,5 @@
+Name: types-pytz
+Version: 2025.2.0.20250326
+Home-page: https://github.com/python/typeshed
+License: Apache-2.0
+License-Expression: 
