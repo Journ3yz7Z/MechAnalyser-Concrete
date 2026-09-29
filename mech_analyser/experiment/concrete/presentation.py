@@ -40,6 +40,8 @@ def parameter_rows(a):
     rows = [('材料',val('material')),('水泥/细骨料',f'{m.get("cement_ratio") or "1"}:{val("aggregate_ratio")}'),
             ('含水率',f'{val("water_content")} %'),('压注压强',f'{val("pressure")} MPa'),
             ('压注时间',injection_text(m.get('injection_hours',''))),('养护天数',f'{val("curing_days")} 天')]
+    if '三轴' in str(m.get('test_type', '')):
+        rows.insert(0, ('围压', f'{val("confining_pressure")} MPa'))
     return [(label,value) for label,value in rows if label != '压注时间' or not unpressurized(m.get('pressure'))]
 
 

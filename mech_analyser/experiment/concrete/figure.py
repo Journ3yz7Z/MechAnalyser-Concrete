@@ -108,11 +108,17 @@ def export_figure(a, path, xlim=None):
                 target=max(.35,fraction-(overflow+2*fig.dpi/72)/ax.bbox.width)
                 ax.set_xlim(current[0],current[0]+(px-current[0])/target)
         fig.canvas.draw()
-        if xlim is not None:
+        if info_artist is not None:
             renderer=fig.canvas.get_renderer()
             b=info_artist.get_window_extent(renderer)
             size=(b.width/ax.bbox.width,b.height/ax.bbox.height)
-            place=clear_box(a,(ax.get_xlim(),ax.get_ylim()),size,(.025,.52-size[1]/2))
+            preferred=(.025,.52-size[1]/2) if xlim is not None else (.025,.975-size[1])
+            obstacles=[]
+            if xlim is None:
+                for item in [legend]+([peak_text] if px is not None else []):
+                    rect=item.get_window_extent(renderer).transformed(ax.transAxes.inverted())
+                    obstacles.append((rect.x0,rect.y0,rect.x1,rect.y1))
+            place=clear_box(a,(ax.get_xlim(),ax.get_ylim()),size,preferred,obstacles)
             if place is not None:
                 info_artist.xycoords=info_artist.boxcoords=ax.transAxes
                 info_artist.xy=info_artist.xybox=(place[0],place[1]+size[1])
@@ -121,7 +127,7 @@ def export_figure(a, path, xlim=None):
             occupied=[(b.x0,b.y0,b.x1,b.y1)]
             b=legend.get_window_extent(renderer)
             size=(b.width/ax.bbox.width,b.height/ax.bbox.height)
-            place=clear_box(a,(ax.get_xlim(),ax.get_ylim()),size,(.025,.965-size[1]),occupied)
+            place=clear_box(a,(ax.get_xlim(),ax.get_ylim()),size,(.025 if xlim is not None else .36,.965-size[1]),occupied)
             if place is not None:
                 legend.set_bbox_to_anchor((place[0],place[1]+size[1]))
             fig.canvas.draw()

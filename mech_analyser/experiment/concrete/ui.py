@@ -10,7 +10,7 @@ from PySide6.QtWidgets import (QMainWindow, QWidget, QDialog, QVBoxLayout, QHBox
     QFormLayout, QLabel, QPushButton, QComboBox, QSpinBox, QDoubleSpinBox, QCheckBox,
     QLineEdit, QTextEdit, QTableWidget, QTableWidgetItem, QDialogButtonBox, QMessageBox,
     QFileDialog, QTabWidget, QSplitter, QScrollArea, QGroupBox, QHeaderView, QApplication,
-    QListWidget, QListWidgetItem, QInputDialog)
+    QListWidget, QListWidgetItem, QInputDialog, QGridLayout)
 from mech_analyser.experiment.ui import PlotWidget as BasePlotWidget
 from .data import (CHANNELS, LABELS, UNITS, ImportSettings, RawData, workbook_sheets,
                    sheet_preview, infer_columns, sheet_identity)
@@ -54,6 +54,19 @@ class ChoiceField(QComboBox):
             self.addItem(text + "（自定义）", text)
             index = self.count()-1
         self.setCurrentIndex(max(0, index))
+
+
+class ConfiningPressureField(ChoiceField):
+    def _custom(self):
+        if self.currentData() is not None:
+            return
+        try:
+            initial = float(self._last_value)
+        except ValueError:
+            initial = 2.5
+        value, ok = QInputDialog.getDouble(self, '自定义围压', '围压压强 (MPa)：',
+                                         initial, 0, 1000000, 6)
+        self.setText(f'{value:g}' if ok else self._last_value)
 
 
 class ImportDialog(QDialog):
@@ -601,6 +614,18 @@ class ConcreteWindow(QMainWindow):
                 self.fields[key]=field
                 layout.addWidget(field,2 if key=='specimen' else 0 if key=='cement_ratio' else 1)
             outer.addLayout(layout)
+        self.confining_row = QWidget()
+        confining_layout = QHBoxLayout(self.confining_row)
+        confining_layout.setContentsMargins(0, 0, 0, 0)
+        confining_layout.addWidget(QLabel('三轴试验参数  ·  围压压强 (MPa)'))
+        self.fields['confining_pressure'] = ConfiningPressureField(
+            [(f'{x} MPa', str(x)) for x in (2.5, 5, 7.5, 10)])
+        self.fields['confining_pressure'].setMaximumWidth(200)
+        self.fields['confining_pressure'].currentIndexChanged.connect(self.metadata_changed)
+        confining_layout.addWidget(self.fields['confining_pressure'])
+        confining_layout.addStretch()
+        outer.addWidget(self.confining_row)
+        self.confining_row.hide()
         splitter = QSplitter()
         outer.addWidget(splitter, 1)
         self.tabs = QTabWidget()
@@ -652,13 +677,32 @@ class ConcreteWindow(QMainWindow):
         range_form.addRow(hint)
         side.addWidget(range_box)
         result_box = QGroupBox("主要结果")
-        result_form = QFormLayout(result_box)
+        result_layout = QHBoxLayout(result_box)
+        result_layout.setSpacing(18)
+        result_form = QFormLayout()
+        result_layout.addLayout(result_form, 1)
         self.metrics = {}
         for key, title in (("stress", "峰值应力"), ("force", "峰值轴力"), ("E", "弹性模量"), ("nu", "泊松比")):
             value = QLabel("—")
             value.setStyleSheet("font-size:17px; font-weight:600; color:#155a85;")
             result_form.addRow(title, value)
             self.metrics[key] = value
+        fit_grid = QGridLayout()
+        fit_grid.setHorizontalSpacing(12)
+        fit_grid.addWidget(QLabel('拟合质量'), 0, 0)
+        fit_grid.addWidget(QLabel('R²'), 0, 1)
+        fit_grid.addWidget(QLabel('n'), 0, 2)
+        self.fit_metrics = {}
+        for row, (key, label) in enumerate((('E', '轴向'), ('kh', '环向')), 1):
+            fit_grid.addWidget(QLabel(label), row, 0)
+            for col, metric in enumerate(('r2', 'n'), 1):
+                value = QLabel('—')
+                value.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
+                value.setStyleSheet('font-weight:600; color:#155a85;')
+                fit_grid.addWidget(value, row, col)
+                self.fit_metrics[(key, metric)] = value
+        fit_grid.setRowStretch(3, 1)
+        result_layout.addLayout(fit_grid)
         side.addWidget(result_box)
         self.force_note = QLabel("")
         self.force_note.setWordWrap(True)
@@ -771,6 +815,9 @@ class ConcreteWindow(QMainWindow):
 
     def sync_pressure_time(self):
         self.fields['injection_hours'].setEnabled(self.analyser is not None and not unpressurized(self.fields['pressure'].text()))
+        triaxial = '三轴' in self.fields['test_type'].text()
+        self.confining_row.setVisible(triaxial)
+        self.fields['confining_pressure'].setEnabled(self.analyser is not None and triaxial)
 
     def confirm_unsaved(self):
         self.stash_session()
@@ -994,6 +1041,11 @@ class ConcreteWindow(QMainWindow):
         self.metrics["force"].setText(short(r.get("peak_force_kN"), 3, " kN"))
         self.metrics["E"].setText(short(r.get("E_GPa"), 3, " GPa") if not r["errors"] else "计算失败")
         self.metrics["nu"].setText(short(r.get("nu"), 4) if not r["errors"] else "计算失败")
+        for key in ('E', 'kh'):
+            fit = r.get(key, {})
+            r2 = fit.get('r2')
+            self.fit_metrics[(key, 'r2')].setText('—' if r2 is None else f'{r2:.6f}')
+            self.fit_metrics[(key, 'n')].setText(str(fit.get('n', r.get('n', 0))))
         self.force_note.setText("轴力：" + r.get("peak_force_source", "缺少轴力列或截面积；可在“单位 / 符号 / 重新导入”中补充"))
         lines.append("峰值轴力 kN：" + number(r.get("peak_force_kN")) + "；来源：" + html.escape(r.get("peak_force_source", "未提供")))
         lines.append("峰值轴力原始行：" + str(r.get("peak_force_row", "未提供")))

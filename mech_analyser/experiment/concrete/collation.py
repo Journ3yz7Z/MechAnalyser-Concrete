@@ -25,6 +25,7 @@ def summary(a):
          "完整试样编号": a.metadata.get("specimen", ""), "压注压强_MPa": a.metadata.get("pressure", ""),
          "压注时间": injection_text(a.metadata.get("injection_hours", "")), "养护龄期_d": a.metadata.get("curing_days", ""),
          "试验类型": a.metadata.get("test_type") or "单轴压缩试验",
+         "围压_MPa": a.metadata.get("confining_pressure", "") if '三轴' in str(a.metadata.get('test_type', '')) else "",
          "材料": a.metadata.get("material", ""), "水泥比例值": a.metadata.get("cement_ratio", ""),
          "细骨料比例值": a.metadata.get("aggregate_ratio", ""), "含水率_%": a.metadata.get("water_content", ""),
          "峰值轴向应力_MPa": r.get("peak_stress_MPa"), "峰值对应轴向应变_mm/mm": r.get("peak_axial_strain"),
