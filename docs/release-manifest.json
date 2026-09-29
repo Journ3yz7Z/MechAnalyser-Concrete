@@ -110,5 +110,13 @@
     "sha256": "4bbef103ba29549c452e600a199b0c23c35615b599b8f332fe5229a1b18f8b96",
     "exe_sha256": "bccd6bdc9dec76bed1d26311d4a2d274af596e1f0f4821254d61cf57790c858a",
     "entries": 1499
+  },
+  {
+    "version": "1.8.1",
+    "asset": "MechAnalyser-Concrete-v1.8.1-Windows-x64.zip",
+    "bytes": 126612172,
+    "sha256": "ca0de5b45ba385daf86a190dfb68ca97f6740f963ef057cef0be2f2b3718091a",
+    "exe_sha256": "a3f350ea6260126a048a4c2abf83061f86854ac49d877a33127cc07b75f502e4",
+    "entries": 1499
   }
 ]

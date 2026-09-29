@@ -167,6 +167,23 @@ def run(argv):
             assert np.allclose(np.array(data)[:,1:], selected,rtol=1e-12,atol=1e-15)
             export_wb.close()
             report['export'] = str(exported[0].parent)
+            import xml.etree.ElementTree as ET
+            report['format_checks'] = {}
+            for formats in (('svg',), ('png', 'svg')):
+                before = set((out/'export').iterdir())
+                for fmt, check in window.export_formats.items():
+                    check.setChecked(fmt in formats)
+                QTest.mouseClick(window.export_button, Qt.MouseButton.LeftButton)
+                created = set((out/'export').iterdir()) - before
+                assert len(created) == 1, errors
+                folder = created.pop()
+                for fmt in ('png', 'svg'):
+                    names = {p.name for p in folder.glob('*.'+fmt)}
+                    expected_names = {f'全范围图.{fmt}', f'局部放大图.{fmt}'} if fmt in formats else set()
+                    assert names == expected_names, (formats, names, errors)
+                for svg in folder.glob('*.svg'):
+                    assert ET.parse(svg).getroot().tag.endswith('svg')
+                report['format_checks']['+'.join(formats)] = True
             report['source_sha256_before'] = before_hash
             report['source_sha256_after'] = file_hash(path)
             assert before_hash == file_hash(path)

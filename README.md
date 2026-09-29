@@ -4,11 +4,13 @@
 
 本仓库由 [Journ3yz7Z](https://github.com/Journ3yz7Z) 维护，是独立改造版本，不是原作者的官方发行版。上游原作者版权和 MIT 许可完整保留，见 [LICENSE](LICENSE) 与 [SOURCE_NOTICE.md](SOURCE_NOTICE.md)。
 
+> 1.8 的 Windows 发布包缺少 SVG 后端。需要 SVG 导出请下载 1.8.1；1.8.1 已增加打包后两种 SVG 导出组合的自检。
+
 ## 下载与启动
 
 到 [Releases](https://github.com/Journ3yz7Z/MechAnalyser-Concrete/releases) 下载 `MechAnalyser-Concrete-v版本号-Windows-x64.zip`。解压整个文件夹，再运行 `MechAnalyser-Concrete.exe`。必须保留旁边的 `_internal` 文件夹，不能只复制 exe。
 
-这是 Windows x64 便携程序，无需另装 Python。发布包未做代码签名。最新版公开归档为 **1.8**；历史版本功能不同，详见 [更新记录](CHANGELOG.md)。每个版本提供 SHA-256 校验文件。
+这是 Windows x64 便携程序，无需另装 Python。发布包未做代码签名。最新版公开归档为 **1.8.1**；历史版本功能不同，详见 [更新记录](CHANGELOG.md)。每个版本提供 SHA-256 校验文件。
 
 ## 功能与使用流程
 
@@ -55,7 +57,7 @@ $$\nu=-\frac{E}{k_h}$$
 
 ## 源码与历史版本的对应关系
 
-仓库主分支提供 **1.8 源码**。1.6.3、1.6.4、1.7、1.8 的源码随对应版本发布；已发布的新版本逐一核对了 exe 内项目模块与源码的编译内容，忽略文件位置和行号。
+仓库主分支提供 **1.8.1 源码**。1.6.3、1.6.4、1.7、1.8 的源码随对应版本发布；已发布的新版本逐一核对了 exe 内项目模块与源码的编译内容，忽略文件位置和行号。
 
 1.0～1.6.2 的历史标签仅提供归档说明，GitHub 自动生成的 Source code 附件不是这些旧版的完整源码；运行旧版请下载 Windows x64 附件。
 

@@ -1,7 +1,7 @@
 # -*- mode: python ; coding: utf-8 -*-
 from PyInstaller.utils.hooks import collect_submodules
 
-hiddenimports = ['scipy.stats', 'matplotlib.backends.backend_agg']
+hiddenimports = ['scipy.stats', 'matplotlib.backends.backend_agg', 'matplotlib.backends.backend_svg']
 hiddenimports += collect_submodules('mech_analyser.experiment')
 
 

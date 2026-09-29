@@ -1,3 +1,15 @@
+# 1.8.1 · SVG 导出打包修复
+
+- 修复 1.8 Windows 程序导出 SVG 时提示 `No module named 'matplotlib.backends.backend_svg'`：在打包配置中明确加入 SVG 后端。
+- 打包后的程序自检覆盖仅 PNG、仅 SVG、PNG＋SVG，检查两种范围图片及 SVG 文件结构。
+- 保留 1.8 的 R² 显示、默认区间设置和计算算法；不改动原始数据。
+
+1.8 的源码环境支持 SVG，但其原发布 exe 漏打包依赖。需要 SVG 导出时请使用 1.8.1。
+
+基于 ksonter95/MechAnalyser，原作者 Copyright (c) 2025 ksonter95 与 MIT 许可完整保留。
+
+---
+
 # MechAnalyser-Concrete 1.8
 
 基于本地 1.7 更新，保留原有计算方法。
