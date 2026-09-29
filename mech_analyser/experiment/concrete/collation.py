@@ -77,7 +77,10 @@ def export_plot(a, path):
     return export_figure(a, path)
 
 
-def export_current(a, parent):
+def export_current(a, parent, formats=("png",)):
+    formats = tuple(dict.fromkeys(formats))
+    if not formats or any(f not in ("png", "svg") for f in formats):
+        raise ValueError("请至少选择一种图片格式（PNG / SVG）。")
     source_state(a)
     stem = re.sub(r'[<>:"/\\|?*\x00-\x1f]', "_", a.metadata.get("specimen") or "当前试样")[:100].rstrip('. ')
     folder = Path(parent) / f'{stem}_{datetime.now():%Y%m%d_%H%M%S}_{uuid.uuid4().hex[:6]}'
@@ -127,8 +130,9 @@ def export_current(a, parent):
         writer.writerow(headers)
         writer.writerows(selected_rows)
     from .figure import export_figure
-    export_figure(a, folder / "全范围图.png")
-    export_figure(a, folder / "局部放大图.png", xlim=(-.005,.005))
+    for fmt in formats:
+        export_figure(a, folder / f"全范围图.{fmt}")
+        export_figure(a, folder / f"局部放大图.{fmt}", xlim=(-.005,.005))
     save_analysis(a, folder / "分析记录.mca.json")
     (folder / "说明.txt").write_text(
         "本目录仅导出当前一个试样。实际拟合数据按原始顺序包含同一批同步点，可直接在 Origin 复核。\n"

@@ -21,6 +21,8 @@ from .persistence import save_analysis, load_analysis, source_state, save_worksp
 from .presentation import rich, parameter_text, band, arrow_x, poisson_html, clear_box, unpressurized
 from .defaults import DEFAULT_METADATA, fill_defaults
 from .import_check import compare_layout
+from .preferences import load_default, save_default
+from .presentation import fit_result_html
 
 
 class ChoiceField(QComboBox):
@@ -457,11 +459,7 @@ class CurvePanel(BasePlotWidget):
             if self.view != 3:
                 return
             self.modulus_label.hide()
-            result=rich(f'E = {a.result["E_GPa"]:.3f} GPa',11) if 'E_GPa' in a.result else ''
-            if a.result.get('nu') is not None:
-                result += ('<table cellspacing="0" cellpadding="1" style="font-family:Times New Roman;font-size:11pt"><tr>'
-                    '<td rowspan="2"><i>ν</i> = −</td><td style="border-bottom:1px solid black"><i>E</i></td>'
-                    f'<td rowspan="2"> = {a.result["nu"]:.3f}</td></tr><tr><td><i>k</i><sub style="font-family:SimSun">横</sub></td></tr></table>')
+            result=fit_result_html(a)
             self.formula_label.setHtml(result)
             self.formula_label.setAnchor((0,1))
             self.band_label.setAnchor((0,1))
@@ -569,6 +567,16 @@ class ConcreteWindow(QMainWindow):
             setattr(self, name, b)
             bar.addWidget(b)
         outer.addLayout(bar)
+        format_bar = QHBoxLayout()
+        format_bar.addWidget(QLabel("导出图片格式（可多选）："))
+        self.export_formats = {}
+        for fmt in ("png", "svg"):
+            check = QCheckBox(fmt.upper())
+            check.setChecked(fmt == "png")
+            self.export_formats[fmt] = check
+            format_bar.addWidget(check)
+        format_bar.addStretch()
+        outer.addLayout(format_bar)
         sheet_bar = QHBoxLayout()
         sheet_bar.addWidget(QLabel("当前试样"))
         self.specimens = QComboBox()
@@ -672,7 +680,14 @@ class ConcreteWindow(QMainWindow):
         self.origin = QCheckBox("三项拟合均强制过原点（默认不勾选）")
         self.origin.toggled.connect(self.parameters_changed)
         range_form.addRow(self.origin)
-        hint = QLabel("比例为所选分支峰值的比例。默认 0.2–0.4 仅作初始区间，需人工检查。应变范围用 mm/mm。")
+        self.save_default_button = QPushButton("将当前区间设为默认")
+        self.save_default_button.clicked.connect(self.save_fit_default)
+        range_form.addRow(self.save_default_button)
+        self.default_hint = QLabel()
+        self.default_hint.setWordWrap(True)
+        range_form.addRow(self.default_hint)
+        self.update_default_hint()
+        hint = QLabel("默认区间仅用于新导入试样，需人工检查；打开分析保留其原有区间。应变范围用 mm/mm。")
         hint.setWordWrap(True)
         range_form.addRow(hint)
         side.addWidget(range_box)
@@ -940,7 +955,7 @@ class ConcreteWindow(QMainWindow):
                 peak = a.result.get("branch_peak_stress_MPa", 1)
                 lo, hi = lo / peak, hi / peak
         else:
-            lo, hi = (0.2, 0.4) if mode == "ratio" else (0, 0.001) if mode == "strain" else (0, 10)
+            lo, hi = (0.2, 0.5) if mode == "ratio" else (0, 0.001) if mode == "strain" else (0, 10)
         self.updating = True
         self.low.setValue(lo)
         self.high.setValue(hi)
@@ -1130,13 +1145,29 @@ class ConcreteWindow(QMainWindow):
             except Exception as exc:
                 QMessageBox.critical(self, "打开失败", str(exc))
 
+    def update_default_hint(self):
+        value = load_default()
+        self.default_hint.setText(f"已保存默认：{MODE_LABELS[value['mode']]} {value['low']:g}～{value['high']:g}")
+
+    def save_fit_default(self):
+        try:
+            save_default(self.mode.currentData(), self.low.value(), self.high.value())
+            self.update_default_hint()
+            QMessageBox.information(self, "默认区间已保存", "重启软件和新导入试样时将使用此区间；现有试样的区间不变。")
+        except (ValueError, OSError) as exc:
+            QMessageBox.warning(self, "无法保存默认区间", str(exc))
+
     def export_clicked(self):
         if not self.analyser:
+            return
+        formats = [fmt for fmt, check in self.export_formats.items() if check.isChecked()]
+        if not formats:
+            QMessageBox.warning(self, "请选择图片格式", "请至少勾选 PNG 或 SVG。")
             return
         parent = QFileDialog.getExistingDirectory(self, "选择导出目录（自动新建当前试样子目录）")
         if parent:
             try:
-                folder = export_current(self.analyser, parent)
+                folder = export_current(self.analyser, parent, formats)
                 self.refresh()
                 QMessageBox.information(self, "已导出当前试样", f"导出目录：\n{folder}\n\n包含 Excel、Origin CSV、检查图和分析记录。")
             except Exception as exc:

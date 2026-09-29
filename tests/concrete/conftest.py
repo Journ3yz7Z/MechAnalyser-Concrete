@@ -8,6 +8,11 @@ from mech_analyser.experiment.concrete.analyser import Analyser
 
 
 @pytest.fixture(autouse=True)
+def isolated_preferences(tmp_path, monkeypatch):
+    monkeypatch.setenv('MECHANALYSER_PREFERENCES', str(tmp_path / 'preferences.json'))
+
+
+@pytest.fixture(autouse=True)
 def qt_runtime(qapp):
     return qapp
 

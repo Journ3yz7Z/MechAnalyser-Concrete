@@ -108,3 +108,18 @@ def clear_box(a, ranges, size, preferred, obstacles=()):
         if any(np.any((left<r)&(right>l)&(bottom<t)&(top>b)) for left,right,bottom,top in segments): continue
         return x,y
     return None
+
+
+def fit_r2(a, key):
+    value = a.result.get(key, {}).get("r2")
+    return "—" if value is None else f"{value:.3f}"
+
+
+def fit_result_html(a):
+    r = a.result
+    rows = []
+    if "E_GPa" in r:
+        rows.append(f'<i>E</i> = {r["E_GPa"]:.3f} GPa,　<i>R</i><sup>2</sup><sub>轴</sub> = {fit_r2(a, "E")}')
+    if r.get("nu") is not None:
+        rows.append(f'<i>ν</i> = {r["nu"]:.4f},　<i>R</i><sup>2</sup><sub>环</sub> = {fit_r2(a, "kh")}')
+    return '<div style="font-family:Times New Roman,SimSun;font-size:11pt">' + '<br>'.join(rows) + '</div>'

@@ -73,16 +73,14 @@ def export_figure(a, path, xlim=None):
             center=(lo+hi)/2
             band_text=ax.text(.42,center,'线性弹性区间',transform=ax.get_yaxis_transform(),
                     ha='left',va='bottom',fontsize=9,color='#4371a8')
+            from .presentation import fit_r2
             result_rows=[]
+            def r2_box(key, label):
+                return HPacker(children=[text(r'$R^2$'), text(label,6.5), text(' = '+fit_r2(a,key))], align='bottom',pad=0,sep=0)
             if 'E_GPa' in r:
-                result_rows.append(text(r'$E = '+f'{r["E_GPa"]:.3f}'+r'\ \mathrm{GPa}$'))
+                result_rows.append(HPacker(children=[text(r'$E = '+f'{r["E_GPa"]:.3f}'+r'\ \mathrm{GPa},$'),r2_box('E','轴')],align='center',pad=0,sep=8))
             if r.get('nu') is not None:
-                rule=DrawingArea(18,1)
-                rule.add_artist(Line2D([0,18],[.5,.5],lw=.55,color='black'))
-                denominator=HPacker(children=[text(r'$k$'),text('横',6.5)],align='bottom',pad=0,sep=0)
-                fraction=VPacker(children=[text(r'$E$'),rule,denominator],align='center',pad=0,sep=0)
-                result_rows.append(HPacker(children=[text(r'$\nu = -$'),fraction,text(f' = {r["nu"]:.3f}')],
-                                           align='center',pad=0,sep=1.5))
+                result_rows.append(HPacker(children=[text(r'$\nu = '+f'{r["nu"]:.4f}'+r',$'),r2_box('kh','环')],align='center',pad=0,sep=8))
             if result_rows:
                 result_block=VPacker(children=result_rows,align='left',pad=0,sep=2)
                 result_artist=AnnotationBbox(result_block,(.51,center),xycoords=ax.get_yaxis_transform(),

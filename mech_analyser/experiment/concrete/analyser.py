@@ -13,7 +13,7 @@ from .defaults import fill_defaults
 class Parameters(BaseParameters):
     mode: str = "ratio"
     low: float = 0.2
-    high: float = 0.4
+    high: float = 0.5
     branch_start: int = 2
     branch_end: int = 3
     through_origin: bool = False
@@ -48,7 +48,8 @@ def regression(x, y, through_origin=False):
 class Analyser(BaseAnalyser):
     def __init__(self, raw_data, parameters=None, metadata=None):
         if parameters is None:
-            parameters = Parameters()
+            from .preferences import load_default
+            parameters = Parameters(**load_default())
             try:
                 parameters.branch_start, parameters.branch_end = default_branch(raw_data.frame)
             except ValueError:
