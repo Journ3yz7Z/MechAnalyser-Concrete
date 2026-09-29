@@ -20,6 +20,7 @@ from .collation import AXIAL, HOOP, SELECTED, FIT, MODE_LABELS, export_current
 from .persistence import save_analysis, load_analysis, source_state, save_workspace, load_workspace
 from .presentation import rich, parameter_text, band, arrow_x, poisson_html, clear_box, unpressurized
 from .defaults import DEFAULT_METADATA, fill_defaults
+from .import_check import compare_layout
 
 
 class ChoiceField(QComboBox):
@@ -246,7 +247,7 @@ class WorkbookImportDialog(ImportDialog):
             item.setFlags(item.flags() | Qt.ItemFlag.ItemIsUserCheckable)
             item.setCheckState(Qt.CheckState.Checked)
             self.choices.addItem(item)
-        self.layout().insertWidget(1, QLabel("勾选要导入的 sheet；下方选择一个作为列/单位模板。仅接受相同表头布局，各试样仍独立分析。"))
+        self.layout().insertWidget(1, QLabel("勾选要导入的 sheet；下方选择一个作为列/单位模板。校验前9列及额外选用列；其他辅助列表头差异仅提醒。"))
         self.layout().insertWidget(2, self.choices)
         self.sheet.setCurrentIndex(1 if self.sheet.count() > 1 else 0)
         for label in self.findChildren(QLabel):
@@ -286,19 +287,19 @@ class WorkbookImportDialog(ImportDialog):
                      if self.choices.item(i).checkState() == Qt.CheckState.Checked]
             if not names:
                 raise ValueError("请至少勾选一个 sheet")
-            reference = sheet_preview(self.path, template.sheet, template.header_row)[0][0]
-            def trim_trailing_blanks(values):
-                values = list(values)
-                while values and (values[-1] is None or (isinstance(values[-1], str) and not values[-1].strip())):
-                    values.pop()
-                return values
-            reference = trim_trailing_blanks(reference)
-            settings = []
+            reference = sheet_preview(self.path, template.sheet, template.header_row)[0]
+            selected = set(template.columns.values())
+            if template.force_column is not None:
+                selected.add(template.force_column)
+            settings, ignored = [], []
             for name in names:
-                headers = sheet_preview(self.path, name, template.header_row)[0][0]
-                if trim_trailing_blanks(headers) != reference:
-                    raise ValueError(f"{name} 的表头布局与模板不同。请取消勾选该 sheet，之后单独导入并确认列与单位。")
+                rows = sheet_preview(self.path, name, template.header_row)[0]
+                if compare_layout(reference, rows, selected, name):
+                    ignored.append(name)
                 settings.append(replace(template, sheet=name))
+            if ignored:
+                QMessageBox.information(self, '辅助列差异已忽略',
+                    '前9列及额外选用列的列名和单位一致，可以批量导入。以下sheet的未使用辅助列表头不同，已忽略：\n' + '、'.join(ignored))
             self.settings, self.all_settings = template, settings
         except (ValueError, IndexError) as exc:
             QMessageBox.warning(self, "请检查导入设置", str(exc))
