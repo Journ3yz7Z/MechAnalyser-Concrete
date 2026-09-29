@@ -86,5 +86,29 @@
     "sha256": "8d69d380b7b06a685b784c8bf0fcf1e558ed7741cd9a63061e2a8effbb135e4e",
     "exe_sha256": "a7c4f47bb55b6d4ab626f1518b8689f015f844ac360047b4f12e8096cdeea672",
     "entries": 1499
+  },
+  {
+    "version": "1.6.4",
+    "asset": "MechAnalyser-Concrete-v1.6.4-Windows-x64.zip",
+    "bytes": 126574291,
+    "sha256": "3a1b36446640dd1f6af9926d2ab037fdee0d4b393ed9e7580518246e0b3e29db",
+    "exe_sha256": "a9aab5b42e6a0365d8c2c66f0fbed9ed20a4a3d105a5eb36510c069b9bcf7cc5",
+    "entries": 1499
+  },
+  {
+    "version": "1.7",
+    "asset": "MechAnalyser-Concrete-v1.7-Windows-x64.zip",
+    "bytes": 126572582,
+    "sha256": "ddeca84700f545523706a8f09afa4b1ce0d81bd131a945821122989b8991315e",
+    "exe_sha256": "d3d2551713b3886a012dc7308d5dc06f74f8024e96253f0a72f331671cbdab09",
+    "entries": 1499
+  },
+  {
+    "version": "1.8",
+    "asset": "MechAnalyser-Concrete-v1.8-Windows-x64.zip",
+    "bytes": 126575909,
+    "sha256": "4bbef103ba29549c452e600a199b0c23c35615b599b8f332fe5229a1b18f8b96",
+    "exe_sha256": "bccd6bdc9dec76bed1d26311d4a2d274af596e1f0f4821254d61cf57790c858a",
+    "entries": 1499
   }
 ]
