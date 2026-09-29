@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>w_Microindentation</class>
+ <widget class="QWidget" name="w_Microindentation">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>612</width>
+    <height>363</height>
+   </rect>
+  </property>
+  <layout class="QGridLayout" name="gl_Microindentation">
+   <item row="0" column="0">
+    <widget class="QLabel" name="l_Cycles">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string>Number of compression/recover cycles in the experiment</string>
+     </property>
+     <property name="text">
+      <string>Cycles</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QSpinBox" name="sb_Cycles">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string>Number of compression/recover cycles in the experiment</string>
+     </property>
+     <property name="maximum">
+      <number>999</number>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2" rowspan="10">
+    <spacer name="s_Horizontal">
+     <property name="orientation">
+      <enum>Qt::Orientation::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="l_SamplesToSkip">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string>Number of samples at the beginning of the sample data to skip</string>
+     </property>
+     <property name="text">
+      <string>Samples to skip</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QSpinBox" name="sb_SamplesToSkip">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximum">
+      <number>999</number>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="l_IndenterRadius">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string>Radius of the spherical indenter.  This is the value R in the equation F = 4/3 * E / (1 - v²) * sqrt(R(δ - a)³) + b</string>
+     </property>
+     <property name="text">
+      <string>Indenter radius (R)</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QDoubleSpinBox" name="sb_IndenterRadius">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string>Radius of the spherical indenter.  This is the value R in the equation F = 4/3 * E / (1 - v²) * sqrt(R(δ - a)³) + b</string>
+     </property>
+     <property name="suffix">
+      <string>µm</string>
+     </property>
+     <property name="maximum">
+      <double>10000.0</double>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="l_PoissonsRatio">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string>Poisson's ratio of the sample.  This is the value of v in the equation F = 4/3 * E / (1 - v²) * sqrt(Rh³).  See Bas, Onur, et al. &quot;Rational design and fabrication of multiphasic soft network composites for tissue engineering articular cartilage: A numerical model-based approach.&quot; Chemical Engineering Journal 340 (2018): 15-23</string>
+     </property>
+     <property name="text">
+      <string>Poisson's ratio (v)</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QDoubleSpinBox" name="sb_PoissonsRatio">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string>Poisson's ratio of the sample.  This is the value of v in the equation F = 4/3 * E / (1 - v²) * sqrt(Rh³).  See Bas, Onur, et al. &quot;Rational design and fabrication of multiphasic soft network composites for tissue engineering articular cartilage: A numerical model-based approach.&quot; Chemical Engineering Journal 340 (2018): 15-23</string>
+     </property>
+     <property name="decimals">
+      <number>4</number>
+     </property>
+     <property name="maximum">
+      <double>0.500000000000000</double>
+     </property>
+     <property name="singleStep">
+      <double>0.001000000000000</double>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="l_DeltaRThreshold">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string>Threshold for the ratio of the indentation depth to the radius of the indenter.  If the ratio is greater than this value, then the Hertz model is not a valid approximation of the indentation response</string>
+     </property>
+     <property name="text">
+      <string>δ/R threshold</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QDoubleSpinBox" name="sb_DeltaRThreshold">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string>Threshold for the ratio of the indentation depth to the radius of the indenter.  If the ratio is greater than this value, then the Hertz model is not a valid approximation of the indentation response</string>
+     </property>
+     <property name="maximum">
+      <double>1.000000000000000</double>
+     </property>
+     <property name="singleStep">
+      <double>0.010000000000000</double>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QCheckBox" name="cb_RegressionOffsets">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string>If unchecked, the experiment is assumed to have been perfectly prepared, calibrated, and configured, and therefore the offsets between the experiment outputs and the values can be ignored in the equation relating indentation depth to indentation force</string>
+     </property>
+     <property name="text">
+      <string>Regression offsets</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="QCheckBox" name="cb_OffsetBounds">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string>If unchecked, parameter offsets are unbounded and can take whatever value required to minimise the regression error</string>
+     </property>
+     <property name="text">
+      <string>Offset bounds</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QLabel" name="l_OffsetTipDisplacement">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string>Offset that relates the tip displacement and indentation depth.  It is the parameter a in the equation F = 4 / 3 * E / (1 - v²) * sqrt(R(δ - a)³) + b</string>
+     </property>
+     <property name="text">
+      <string>Tip Displacement (a)</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="1">
+    <widget class="QDoubleSpinBox" name="sb_OffsetTipDisplacement">
+     <property name="toolTip">
+      <string>Offset that relates the tip displacement and indentation depth.  It is the parameter a in the equation F = 4 / 3 * E / (1 - v²) * sqrt(R(δ - a)³) + b</string>
+     </property>
+     <property name="suffix">
+      <string>µm</string>
+     </property>
+     <property name="maximum">
+      <double>1000.000000000000000</double>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="0">
+    <widget class="QLabel" name="l_OffsetForce">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string>Offset that relates the measured force and indentation force.  It is the parameter b in the equation F = 4 / 3 * E / (1 - v²) * sqrt(R(δ - a)³) + b</string>
+     </property>
+     <property name="text">
+      <string>Force (b)</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="1">
+    <widget class="QDoubleSpinBox" name="sb_OffsetForce">
+     <property name="toolTip">
+      <string>Offset that relates the measured force and indentation force.  It is the parameter b in the equation F = 4 / 3 * E / (1 - v²) * sqrt(R(δ - a)³) + b</string>
+     </property>
+     <property name="suffix">
+      <string>µN</string>
+     </property>
+     <property name="maximum">
+      <double>1000000.000000000000000</double>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="0" colspan="2">
+    <spacer name="s_Vertical">
+     <property name="orientation">
+      <enum>Qt::Orientation::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

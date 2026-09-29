@@ -1,0 +1,27 @@
+# Private input/output must never be committed.
+*.xlsx
+*.xls
+*.csv
+*.mca.json
+*.mcw.json
+datasets/
+data/
+outputs/
+exports/
+session-files/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.log
+*.zip
+*.exe
+*.pyc
+__pycache__/
+.pytest_cache/
+.venv/
+.vscode/
+/build*/
+/dist*/
+/release*/

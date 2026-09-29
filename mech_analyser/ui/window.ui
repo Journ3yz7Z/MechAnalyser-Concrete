@@ -1,0 +1,663 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MechAnalyser</string>
+  </property>
+  <widget class="QTabWidget" name="tw_Main">
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <widget class="QWidget" name="t_Files">
+    <attribute name="title">
+     <string>Files</string>
+    </attribute>
+    <layout class="QGridLayout" name="gl_Files">
+     <item row="0" column="0">
+      <widget class="QPushButton" name="pb_SaveAnalysis">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string>Select the directory to which all analysis outputs will be saved.  By default, the analysis corresponding to the input CSVs will be saved in the same directory as the CSVs.</string>
+       </property>
+       <property name="text">
+        <string>Save analysis to...</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1" colspan="4">
+      <widget class="QTextBrowser" name="tb_SaveAnalysis">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Ignored">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string>Directory to which all analysis outputs will be saved.  If it is blank, the analysis corresponding to the input CSVs will be saved in the same directory as the CSVs.</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QPushButton" name="pb_SaveCollation">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string>Select the file to which the collated raw data and summaries will be saved.</string>
+       </property>
+       <property name="text">
+        <string>Save collation to...</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1" colspan="4">
+      <widget class="QTextBrowser" name="tb_SaveCollation">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Ignored">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string>File to which the collated raw data and summaries will be saved.</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0" colspan="5">
+      <widget class="QTableWidget" name="tbl_Files">
+       <property name="horizontalScrollBarPolicy">
+        <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
+       </property>
+       <property name="editTriggers">
+        <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+       </property>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+       </property>
+       <property name="rowCount">
+        <number>0</number>
+       </property>
+       <property name="columnCount">
+        <number>4</number>
+       </property>
+       <attribute name="horizontalHeaderVisible">
+        <bool>true</bool>
+       </attribute>
+       <attribute name="horizontalHeaderStretchLastSection">
+        <bool>true</bool>
+       </attribute>
+       <column>
+        <property name="text">
+         <string>Input .csv</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Output .xlsx</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Group name</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Sample name</string>
+        </property>
+       </column>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QPushButton" name="pb_Clear">
+       <property name="text">
+        <string>Clear</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <spacer name="s_FilesHorizontal">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="3" column="2">
+      <widget class="QPushButton" name="pb_EditOutput">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string>Edit the output filename of the Excel file to which the analysis will be written.</string>
+       </property>
+       <property name="text">
+        <string>Edit output...</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="3">
+      <widget class="QPushButton" name="pb_EditGroup">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string>Edit the group to which the sample belongs.  The summaries of all samples in the same group will be collated into the same sheet within the collated Excel spreadsheet.</string>
+       </property>
+       <property name="text">
+        <string>Edit group...</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="4">
+      <widget class="QPushButton" name="pb_EditSample">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string>Edit the name of the sample.  If multiple samples are selected, then the given sample name will be applied to each with a numerical suffix to uniquely identify each.</string>
+       </property>
+       <property name="text">
+        <string>Edit sample...</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="t_Configuration">
+    <attribute name="title">
+     <string>Configuration</string>
+    </attribute>
+    <layout class="QGridLayout" name="gl_Configuration">
+     <item row="0" column="0">
+      <widget class="QLabel" name="l_Instrument">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Instrument:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="cb_Instrument">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QLabel" name="l_Experiment">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Experiment:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QComboBox" name="cb_Experiment">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="4">
+      <spacer name="s_MainHorizontal">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="1" column="0" colspan="5">
+      <widget class="QStackedWidget" name="sw_Configuration">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="currentIndex">
+        <number>-1</number>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="l_Transcoder">
+       <property name="toolTip">
+        <string>Configure the transcoder settings for the raw data input, raw data output, processed data output, and summary data output</string>
+       </property>
+       <property name="text">
+        <string>Transcoder:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QComboBox" name="cb_Transcoder">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <item>
+        <property name="text">
+         <string>Raw</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Processed</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Summary</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="3" column="0" colspan="5">
+      <widget class="QStackedWidget" name="sw_Transcoder">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <widget class="QWidget" name="w_RawTranscoder">
+        <property name="toolTip">
+         <string>Configure the raw data input and output transcoder settings</string>
+        </property>
+        <layout class="QGridLayout" name="gl_RawTranscoder">
+         <item row="0" column="0">
+          <widget class="QTableWidget" name="tbl_RawTranscoder">
+           <property name="horizontalScrollBarPolicy">
+            <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
+           </property>
+           <property name="editTriggers">
+            <set>QAbstractItemView::EditTrigger::DoubleClicked|QAbstractItemView::EditTrigger::EditKeyPressed</set>
+           </property>
+           <property name="selectionBehavior">
+            <enum>QAbstractItemView::SelectionBehavior::SelectItems</enum>
+           </property>
+           <property name="rowCount">
+            <number>0</number>
+           </property>
+           <property name="columnCount">
+            <number>11</number>
+           </property>
+           <attribute name="horizontalHeaderVisible">
+            <bool>true</bool>
+           </attribute>
+           <attribute name="horizontalHeaderStretchLastSection">
+            <bool>true</bool>
+           </attribute>
+           <column>
+            <property name="text">
+             <string>Name</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Input Included</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Input Name</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Input Units</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Input Row</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Input Column</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Output Included</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Output Name</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Output Units</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Output Column</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Collate</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="w_ProcessedTranscoder">
+        <property name="toolTip">
+         <string>Configure the processed data output transcoder settings</string>
+        </property>
+        <layout class="QGridLayout" name="gl_ProcessedTranscoder">
+         <item row="0" column="0">
+          <widget class="QTableWidget" name="tbl_ProcessedTranscoder">
+           <property name="horizontalScrollBarPolicy">
+            <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
+           </property>
+           <property name="editTriggers">
+            <set>QAbstractItemView::EditTrigger::DoubleClicked|QAbstractItemView::EditTrigger::EditKeyPressed</set>
+           </property>
+           <property name="selectionBehavior">
+            <enum>QAbstractItemView::SelectionBehavior::SelectItems</enum>
+           </property>
+           <property name="rowCount">
+            <number>0</number>
+           </property>
+           <property name="columnCount">
+            <number>6</number>
+           </property>
+           <attribute name="horizontalHeaderVisible">
+            <bool>true</bool>
+           </attribute>
+           <attribute name="horizontalHeaderStretchLastSection">
+            <bool>true</bool>
+           </attribute>
+           <column>
+            <property name="text">
+             <string>Name</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Output Included</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Output Name</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Units</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Column</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Collate</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="w_SummaryTranscoder">
+        <property name="toolTip">
+         <string>Configure the summary data output transcoder settings</string>
+        </property>
+        <layout class="QGridLayout" name="gl_SummaryTranscoder">
+         <item row="0" column="0">
+          <widget class="QTableWidget" name="tbl_SummaryTranscoder">
+           <property name="horizontalScrollBarPolicy">
+            <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
+           </property>
+           <property name="editTriggers">
+            <set>QAbstractItemView::EditTrigger::DoubleClicked|QAbstractItemView::EditTrigger::EditKeyPressed</set>
+           </property>
+           <property name="selectionBehavior">
+            <enum>QAbstractItemView::SelectionBehavior::SelectItems</enum>
+           </property>
+           <property name="rowCount">
+            <number>0</number>
+           </property>
+           <property name="columnCount">
+            <number>6</number>
+           </property>
+           <attribute name="horizontalHeaderVisible">
+            <bool>true</bool>
+           </attribute>
+           <attribute name="horizontalHeaderStretchLastSection">
+            <bool>true</bool>
+           </attribute>
+           <column>
+            <property name="text">
+             <string>Name</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Output Included</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Output Name</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Units</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Column</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Collate</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="t_Output">
+    <attribute name="title">
+     <string>Output</string>
+    </attribute>
+    <layout class="QGridLayout" name="gl_Output">
+     <item row="0" column="0" colspan="3">
+      <widget class="QTreeWidget" name="tree_Output">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="editTriggers">
+        <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+       </property>
+       <property name="columnCount">
+        <number>1</number>
+       </property>
+       <attribute name="headerVisible">
+        <bool>false</bool>
+       </attribute>
+       <column>
+        <property name="text">
+         <string notr="true">1</string>
+        </property>
+       </column>
+      </widget>
+     </item>
+     <item row="0" column="3" rowspan="2">
+      <widget class="QStackedWidget" name="sw_Output">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="currentIndex">
+        <number>-1</number>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QProgressBar" name="pgb_Output">
+       <property name="value">
+        <number>0</number>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QPushButton" name="pb_Cancel">
+       <property name="toolTip">
+        <string>Cancel the running analysis and collation.</string>
+       </property>
+       <property name="text">
+        <string>Cancel</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QPushButton" name="pb_Run">
+       <property name="toolTip">
+        <string>Run the analysis on all samples and collate the raw data and summaries of each.</string>
+       </property>
+       <property name="text">
+        <string>Run</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="mb_Main">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="m_File">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="a_OpenDirectory"/>
+    <addaction name="a_OpenCsvs"/>
+   </widget>
+   <widget class="QMenu" name="m_Help">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="a_Documentation"/>
+    <addaction name="separator"/>
+    <addaction name="a_Version"/>
+   </widget>
+   <addaction name="m_File"/>
+   <addaction name="m_Help"/>
+  </widget>
+  <action name="a_OpenDirectory">
+   <property name="text">
+    <string>Open directory...</string>
+   </property>
+  </action>
+  <action name="a_OpenCsvs">
+   <property name="text">
+    <string>Open CSVs...</string>
+   </property>
+  </action>
+  <action name="a_Documentation">
+   <property name="text">
+    <string>Documentation</string>
+   </property>
+  </action>
+  <action name="a_Version">
+   <property name="text">
+    <string>Version</string>
+   </property>
+  </action>
+ </widget>
+ <tabstops>
+  <tabstop>tbl_Files</tabstop>
+  <tabstop>cb_Instrument</tabstop>
+  <tabstop>cb_Experiment</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,1 @@
+INSTRUMENT = "Instron 68TM"
